@@ -1,3 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="MedClaw logo">
+  <defs>
+    <style>
+      .cross { fill: #d32f2f; }
+      .shell { fill: none; stroke: #1f1f1f; stroke-width: 18; stroke-linecap: round; stroke-linejoin: round; }
+      .accent { stroke: #8a8a8a; }
+    </style>
+  </defs>
+
+  <!-- Red medical cross -->
+  <rect class="cross" x="216" y="112" width="80" height="288" rx="12"/>
+  <rect class="cross" x="112" y="216" width="288" height="80" rx="12"/>
+
+  <!-- Abstract lobster outline -->
+  <path class="shell" d="M164 256c0-68 44-128 92-128s92 60 92 128-44 128-92 128-92-60-92-128z"/>
+  <path class="shell" d="M256 128c-24 0-44 18-56 44"/>
+  <path class="shell" d="M256 128c24 0 44 18 56 44"/>
+
+  <!-- Antennae -->
+  <path class="shell" d="M236 96c-22-18-48-24-72-20"/>
+  <path class="shell" d="M276 96c22-18 48-24 72-20"/>
+
+  <!-- Tail ticks -->
+  <path class="shell accent" d="M228 392c8 16 20 26 28 26"/>
+  <path class="shell accent" d="M284 392c-8 16-20 26-28 26"/>
+
+  <!-- Claws -->
+  <path class="shell" d="M92 232c-32 0-56 20-56 44s24 44 56 44h48"/>
+  <path class="shell" d="M420 232c32 0 56 20 56 44s-24 44-56 44h-48"/>
+  <path class="shell" d="M140 276l-38 26"/>
+  <path class="shell" d="M372 276l38 26"/>
+</svg>
+
 # MedClaw v0.1 Alpha
 
 MedClaw 是基于 OpenClaw 架构打造的医学领域开源版本，面向医疗专业人士提供更轻量、更快、更省 token 的智能工作台。它不是通用型电脑 Agent 的简单换壳，而是围绕医学检索、证据获取、临床入口、技能调用和长期工作习惯沉淀做了定向收敛。

@@ -1,4 +1,4 @@
-![MedClaw Logo](docs/assets/medclaw-logo.svg)
+<img src="docs/assets/medclaw-logo.svg" alt="MedClaw Logo" width="160" />
 
 # MedClaw v0.1 Alpha
 
@@ -92,4 +92,3 @@ MedClaw 是医学信息与工作流辅助工具，不是诊断系统，也不能
 - 架构基础：OpenClaw
 - 医学版本：MedClaw
 - 开源发布方：梅斯医学 MedSci
-

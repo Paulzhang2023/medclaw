@@ -1,4 +1,4 @@
-<img src="docs/assets/medclaw-logo.svg" alt="MedClaw Logo" width="160" />
+<img src="docs/assets/medclaw-logo.svg" alt="MedClaw Logo" width="240" align="center" />
 
 # MedClaw v0.1 Alpha
 

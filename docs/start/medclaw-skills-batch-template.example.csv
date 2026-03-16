@@ -1,0 +1,3 @@
+name,category,packageUrl,version,summary,description,featured,tags,homepageUrl,sourceUrl,archiveKind,checksumSha256
+MedClaw Table Analysis,statistics,https://example.com/packages/medclaw-table-analysis-0.1.0.zip,0.1.0,Table analysis skill for MedClaw,A cloud-delivered statistics skill for medical table analysis,true,"statistics,medical-research,tables",https://medsci.cn,https://github.com/MedSci/medclaw,zip,replace-with-real-sha256
+MedClaw Guideline Triage,literature,https://example.com/packages/medclaw-guideline-triage-0.1.0.zip,0.1.0,Guideline triage skill for MedClaw,A cloud-delivered literature skill for guideline review,false,"guidelines,literature,evidence",https://medsci.cn,https://github.com/MedSci/medclaw,zip,replace-with-real-sha256

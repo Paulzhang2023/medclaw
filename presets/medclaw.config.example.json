@@ -1,0 +1,40 @@
+{
+  "profile": {
+    "workspace": "~/.medclaw/workspace",
+    "language": "zh-CN",
+    "region": "CN"
+  },
+  "ai": {
+    "provider": "openai",
+    "model": "gpt-5.1",
+    "apiKeyEnv": "OPENAI_API_KEY"
+  },
+  "products": {
+    "deepEvidence": {
+      "enabled": true,
+      "url": "https://deepevid.medsci.cn"
+    },
+    "seekEvidence": {
+      "enabled": true,
+      "url": "https://seekevidence.medsci.cn"
+    }
+  },
+  "surfaces": {
+    "pubmed": true,
+    "clinicalTrials": true,
+    "guidelines": true,
+    "journals": true,
+    "chineseMedicalSites": true
+  },
+  "registry": {
+    "mode": "cloud",
+    "url": "https://adapters.medclaw.ai",
+    "tokenEnv": "MEDCLAW_ADAPTER_REGISTRY_TOKEN",
+    "autoCheck": true
+  },
+  "privacy": {
+    "shareAdapters": false,
+    "askBeforeInstall": true,
+    "askBeforeUpload": true
+  }
+}

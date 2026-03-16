@@ -41,6 +41,19 @@ const coreEntries: CoreCliEntry[] = [
   {
     commands: [
       {
+        name: "medclaw",
+        description: "Apply the MedClaw medical preset and optional narrowed onboarding flow",
+        hasSubcommands: true,
+      },
+    ],
+    register: async ({ program }) => {
+      const mod = await import("./register.medclaw.js");
+      mod.registerMedClawCommand(program);
+    },
+  },
+  {
+    commands: [
+      {
         name: "setup",
         description: "Initialize local config and agent workspace",
         hasSubcommands: false,

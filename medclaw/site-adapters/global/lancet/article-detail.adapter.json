@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "article.lancet.detail.v1",
+  "site": "article",
+  "scope": "global",
+  "owner": "MedClaw",
+  "priority": 90,
+  "tags": ["article", "lancet"],
+  "pages": [
+    {
+      "pageType": "article-detail",
+      "match": {
+        "hosts": ["thelancet.com"],
+        "pathPrefixes": ["/journals/", "/article/"]
+      },
+      "ready": {
+        "waitForSelector": "h1",
+        "snapshotMode": "efficient"
+      },
+      "extraction": {
+        "kind": "detail",
+        "fields": [
+          {
+            "key": "Source",
+            "selector": "meta[property='og:site_name']",
+            "value": "text",
+            "attr": "content"
+          },
+          {
+            "key": "Date",
+            "selector": "time, .article-tools__header time, .article-header__publish-date",
+            "value": "text",
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "Title",
+            "selector": "h1.article-header__title, h1",
+            "value": "text",
+            "required": true,
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "Summary",
+            "selector": ".abstracts p, .article-section__content p, section.abstract p",
+            "value": "text",
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "DOI",
+            "selector": "main, article, body",
+            "value": "text",
+            "transforms": ["extractDoi"]
+          }
+        ],
+        "outputColumns": ["Source", "Date", "Title", "Summary", "DOI"]
+      }
+    }
+  ]
+}

@@ -124,7 +124,7 @@ export class OpenClawApp extends LitElement {
   @state() password = "";
   @state() loginShowGatewayToken = false;
   @state() loginShowGatewayPassword = false;
-  @state() tab: Tab = "chat";
+  @state() tab: Tab = "medical";
   @state() onboarding = resolveOnboardingMode();
   @state() connected = false;
   @state() theme: ThemeName = this.settings.theme ?? "claw";
@@ -211,6 +211,7 @@ export class OpenClawApp extends LitElement {
   @state() configFormOriginal: Record<string, unknown> | null = null;
   @state() configFormDirty = false;
   @state() configFormMode: "form" | "raw" = "form";
+  @state() configDetailLevel: "basic" | "advanced" = "basic";
   @state() configSearchQuery = "";
   @state() configActiveSection: string | null = null;
   @state() configActiveSubsection: string | null = null;
@@ -400,6 +401,10 @@ export class OpenClawApp extends LitElement {
   @state() skillEdits: Record<string, string> = {};
   @state() skillsBusyKey: string | null = null;
   @state() skillMessages: Record<string, SkillMessage> = {};
+  @state() skillsLibraryLoading = false;
+  @state() skillsLibrary: import("./types.ts").CloudSkillsLibraryResult | null = null;
+  @state() skillsLibraryError: string | null = null;
+  @state() skillsLibraryCategory = "";
 
   @state() healthLoading = false;
   @state() healthResult: HealthSummary | null = null;

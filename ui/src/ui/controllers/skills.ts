@@ -1,5 +1,5 @@
 import type { GatewayBrowserClient } from "../gateway.ts";
-import type { SkillStatusReport } from "../types.ts";
+import type { CloudSkillsLibraryResult, SkillStatusReport } from "../types.ts";
 
 export type SkillsState = {
   client: GatewayBrowserClient | null;
@@ -10,6 +10,10 @@ export type SkillsState = {
   skillsBusyKey: string | null;
   skillEdits: Record<string, string>;
   skillMessages: SkillMessageMap;
+  skillsLibraryLoading: boolean;
+  skillsLibrary: CloudSkillsLibraryResult | null;
+  skillsLibraryError: string | null;
+  skillsLibraryCategory: string;
 };
 
 export type SkillMessage = {
@@ -60,10 +64,34 @@ export async function loadSkills(state: SkillsState, options?: LoadSkillsOptions
     if (res) {
       state.skillsReport = res;
     }
+    if (!state.skillsLibrary && !state.skillsLibraryLoading) {
+      await loadSkillsLibrary(state);
+    }
   } catch (err) {
     state.skillsError = getErrorMessage(err);
   } finally {
     state.skillsLoading = false;
+  }
+}
+
+export async function loadSkillsLibrary(state: SkillsState) {
+  if (!state.client || !state.connected || state.skillsLibraryLoading) {
+    return;
+  }
+  state.skillsLibraryLoading = true;
+  state.skillsLibraryError = null;
+  try {
+    const res = await state.client.request<CloudSkillsLibraryResult | undefined>(
+      "skills.library.list",
+      state.skillsLibraryCategory ? { category: state.skillsLibraryCategory } : {},
+    );
+    if (res) {
+      state.skillsLibrary = res;
+    }
+  } catch (err) {
+    state.skillsLibraryError = getErrorMessage(err);
+  } finally {
+    state.skillsLibraryLoading = false;
   }
 }
 
@@ -148,6 +176,34 @@ export async function installSkill(
     const message = getErrorMessage(err);
     state.skillsError = message;
     setSkillMessage(state, skillKey, {
+      kind: "error",
+      message,
+    });
+  } finally {
+    state.skillsBusyKey = null;
+  }
+}
+
+export async function installCloudLibrarySkill(state: SkillsState, skillId: string) {
+  if (!state.client || !state.connected) {
+    return;
+  }
+  state.skillsBusyKey = `cloud:${skillId}`;
+  state.skillsError = null;
+  try {
+    const result = await state.client.request<{ message?: string }>("skills.library.install", {
+      id: skillId,
+      timeoutMs: 120000,
+    });
+    await loadSkills(state);
+    setSkillMessage(state, `cloud:${skillId}`, {
+      kind: "success",
+      message: result?.message ?? "Installed from library",
+    });
+  } catch (err) {
+    const message = getErrorMessage(err);
+    state.skillsError = message;
+    setSkillMessage(state, `cloud:${skillId}`, {
       kind: "error",
       message,
     });

@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "article.mdpi.detail.v1",
+  "site": "article",
+  "scope": "global",
+  "owner": "MedClaw",
+  "priority": 85,
+  "tags": ["article", "mdpi"],
+  "pages": [
+    {
+      "pageType": "article-detail",
+      "match": {
+        "hosts": ["mdpi.com"],
+        "pathRegex": "^/.+/.+/\\d+"
+      },
+      "ready": {
+        "waitForSelector": "h1",
+        "snapshotMode": "efficient"
+      },
+      "extraction": {
+        "kind": "detail",
+        "fields": [
+          {
+            "key": "Source",
+            "selector": "meta[property='og:site_name']",
+            "value": "text",
+            "attr": "content"
+          },
+          {
+            "key": "Date",
+            "selector": ".pubhistory, .artPubdate, time",
+            "value": "text",
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "Title",
+            "selector": "h1.title, h1",
+            "value": "text",
+            "required": true,
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "Summary",
+            "selector": "div.art-abstract p, section.art-abstract p, .html-abstract p",
+            "value": "text",
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "DOI",
+            "selector": "main, article, body",
+            "value": "text",
+            "transforms": ["extractDoi"]
+          }
+        ],
+        "outputColumns": ["Source", "Date", "Title", "Summary", "DOI"]
+      }
+    }
+  ]
+}

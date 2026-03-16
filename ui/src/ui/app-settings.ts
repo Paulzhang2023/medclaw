@@ -198,6 +198,9 @@ export function setThemeMode(
 }
 
 export async function refreshActiveTab(host: SettingsHost) {
+  if (host.tab === "medical") {
+    return;
+  }
   if (host.tab === "overview") {
     await loadOverview(host);
   }

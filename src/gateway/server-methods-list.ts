@@ -46,6 +46,8 @@ const BASE_METHODS = [
   "agents.files.set",
   "skills.status",
   "skills.bins",
+  "skills.library.list",
+  "skills.library.install",
   "skills.install",
   "skills.update",
   "update.run",

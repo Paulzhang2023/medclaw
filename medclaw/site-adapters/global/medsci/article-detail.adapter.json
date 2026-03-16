@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "medicalsite.medsci.detail.v1",
+  "site": "medicalsite",
+  "scope": "global",
+  "owner": "MedClaw",
+  "priority": 100,
+  "tags": ["medicalsite", "medsci"],
+  "pages": [
+    {
+      "pageType": "article-detail",
+      "match": {
+        "hosts": ["medsci.cn", "m.medsci.cn"],
+        "pathPrefixes": ["/article/", "/guideline/", "/index.asp"]
+      },
+      "ready": {
+        "waitForSelector": "h1, .news_title, .detail_title",
+        "snapshotMode": "efficient"
+      },
+      "extraction": {
+        "kind": "detail",
+        "fields": [
+          {
+            "key": "Source",
+            "selector": "meta[property='og:site_name']",
+            "value": "text",
+            "attr": "content"
+          },
+          {
+            "key": "Date",
+            "selector": "time, .time, .source, .detail_info",
+            "value": "text",
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "Title",
+            "selector": "h1, .news_title, .detail_title",
+            "value": "text",
+            "required": true,
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "Summary",
+            "selector": ".news_content p, .detail_content p, article p, .article-content p",
+            "value": "text",
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "URL",
+            "selector": "link[rel='canonical'], meta[property='og:url']",
+            "value": "href",
+            "attr": "href"
+          }
+        ],
+        "outputColumns": ["Source", "Date", "Title", "Summary", "URL"]
+      }
+    }
+  ]
+}

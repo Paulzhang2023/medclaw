@@ -1,4 +1,4 @@
-# OpenClaw macOS app (dev + signing)
+# MedClaw macOS packaging (dev + signing)
 
 ## Quick dev run
 
@@ -21,6 +21,8 @@ scripts/package-mac-app.sh
 ```
 
 Creates `dist/OpenClaw.app` and signs it via `scripts/codesign-mac-app.sh`.
+
+For MedClaw alpha packaging, the distribution artifacts are renamed to `MedClaw.app`, `MedClaw-<version>.zip`, and `MedClaw-<version>.dmg`.
 
 ## Signing behavior
 

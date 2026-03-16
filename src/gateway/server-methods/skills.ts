@@ -3,6 +3,7 @@ import {
   resolveAgentWorkspaceDir,
   resolveDefaultAgentId,
 } from "../../agents/agent-scope.js";
+import { installCloudSkillPackage } from "../../agents/skills-cloud-install.js";
 import { installSkill } from "../../agents/skills-install.js";
 import { buildWorkspaceSkillStatus } from "../../agents/skills-status.js";
 import { loadWorkspaceSkillEntries, type SkillEntry } from "../../agents/skills.js";
@@ -10,6 +11,7 @@ import { listAgentWorkspaceDirs } from "../../agents/workspace-dirs.js";
 import type { OpenClawConfig } from "../../config/config.js";
 import { loadConfig, writeConfigFile } from "../../config/config.js";
 import { getRemoteSkillEligibility } from "../../infra/skills-remote.js";
+import { getCloudSkill, listCloudSkills } from "../../medclaw/cloud-skills-library.js";
 import { normalizeAgentId } from "../../routing/session-key.js";
 import { normalizeSecretInput } from "../../utils/normalize-secret-input.js";
 import {
@@ -142,6 +144,51 @@ export const skillsHandlers: GatewayRequestHandlers = {
       result,
       result.ok ? undefined : errorShape(ErrorCodes.UNAVAILABLE, result.message),
     );
+  },
+  "skills.library.list": async ({ params, respond }) => {
+    const category = typeof params?.category === "string" ? params.category.trim() : "";
+    const query = typeof params?.query === "string" ? params.query.trim() : "";
+    try {
+      const result = await listCloudSkills({
+        ...(category ? { category } : {}),
+        ...(query ? { query } : {}),
+      });
+      respond(true, result, undefined);
+    } catch (error) {
+      respond(
+        false,
+        undefined,
+        errorShape(ErrorCodes.UNAVAILABLE, error instanceof Error ? error.message : String(error)),
+      );
+    }
+  },
+  "skills.library.install": async ({ params, respond }) => {
+    const id = typeof params?.id === "string" ? params.id.trim() : "";
+    if (!id) {
+      respond(false, undefined, errorShape(ErrorCodes.INVALID_REQUEST, "skill id is required"));
+      return;
+    }
+    try {
+      const remoteSkill = await getCloudSkill({ id });
+      const result = await installCloudSkillPackage({
+        skillId: remoteSkill.slug,
+        packageUrl: remoteSkill.packageUrl,
+        archiveKind: remoteSkill.archiveKind,
+        ...(remoteSkill.checksumSha256 ? { expectedSha256: remoteSkill.checksumSha256 } : {}),
+        timeoutMs: typeof params?.timeoutMs === "number" ? params.timeoutMs : 120_000,
+      });
+      if (result.ok) {
+        respond(true, result, undefined);
+        return;
+      }
+      respond(false, result, errorShape(ErrorCodes.UNAVAILABLE, result.message));
+    } catch (error) {
+      respond(
+        false,
+        undefined,
+        errorShape(ErrorCodes.UNAVAILABLE, error instanceof Error ? error.message : String(error)),
+      );
+    }
   },
   "skills.update": async ({ params, respond }) => {
     if (!validateSkillsUpdateParams(params)) {

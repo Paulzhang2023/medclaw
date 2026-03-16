@@ -1,4 +1,5 @@
 import { html, nothing, type TemplateResult } from "lit";
+import { t } from "../../i18n/index.ts";
 import { icons } from "../icons.ts";
 import type { ThemeTransitionContext } from "../theme-transition.ts";
 import type { ThemeMode, ThemeName } from "../theme.ts";
@@ -56,6 +57,8 @@ export type ConfigProps = {
   includeSections?: string[];
   excludeSections?: string[];
   includeVirtualSections?: boolean;
+  detailLevel?: "basic" | "advanced";
+  onDetailLevelChange?: (level: "basic" | "advanced") => void;
 };
 
 // SVG Icons for sidebar (Lucide-style)
@@ -866,6 +869,35 @@ export function renderConfig(props: ConfigProps) {
           </div>
 
           <div class="config-top-tabs__right">
+            ${
+              props.onDetailLevelChange
+                ? html`
+                    <div class="config-detail-level">
+                      <div class="config-detail-level__label">
+                        ${
+                          props.detailLevel === "advanced"
+                            ? t("config.advancedActiveHint")
+                            : t("config.basicActiveHint")
+                        }
+                      </div>
+                      <div class="config-mode-toggle" role="tablist" aria-label="Config detail level">
+                        <button
+                          class="config-mode-toggle__btn ${props.detailLevel !== "advanced" ? "active" : ""}"
+                          @click=${() => props.onDetailLevelChange?.("basic")}
+                        >
+                          ${t("config.basic")}
+                        </button>
+                        <button
+                          class="config-mode-toggle__btn ${props.detailLevel === "advanced" ? "active" : ""}"
+                          @click=${() => props.onDetailLevelChange?.("advanced")}
+                        >
+                          ${t("config.advancedForPowerUsers")}
+                        </button>
+                      </div>
+                    </div>
+                  `
+                : nothing
+            }
             ${
               showModeToggle
                 ? html`

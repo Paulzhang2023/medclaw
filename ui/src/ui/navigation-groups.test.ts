@@ -42,16 +42,14 @@ describe("TAB_GROUPS", () => {
 
   it("does not expose unfinished settings slices in the sidebar", () => {
     const settings = navigation.TAB_GROUPS.find((group) => group.label === "settings");
-    expect(settings?.tabs).toEqual([
-      "config",
-      "communications",
-      "appearance",
-      "automation",
-      "infrastructure",
-      "aiAgents",
-      "debug",
-      "logs",
-    ]);
+    expect(settings?.tabs).toEqual(["config"]);
+  });
+
+  it("exposes a MedClaw-focused primary workspace navigation", () => {
+    const workspace = navigation.TAB_GROUPS.find((group) => group.label === "workspace");
+    const library = navigation.TAB_GROUPS.find((group) => group.label === "library");
+    expect(workspace?.tabs).toEqual(["medical", "chat", "sessions", "usage"]);
+    expect(library?.tabs).toEqual(["skills"]);
   });
 
   it("routes every published settings slice", () => {

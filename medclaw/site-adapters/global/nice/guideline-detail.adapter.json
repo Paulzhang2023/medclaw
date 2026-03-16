@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "guideline.nice.detail.v1",
+  "site": "guideline",
+  "scope": "global",
+  "owner": "MedClaw",
+  "priority": 100,
+  "tags": ["guideline", "nice"],
+  "pages": [
+    {
+      "pageType": "guideline-detail",
+      "match": {
+        "hosts": ["nice.org.uk"],
+        "pathPrefixes": ["/guidance/"]
+      },
+      "ready": {
+        "waitForSelector": "main h1, article h1, #content h1",
+        "snapshotMode": "efficient"
+      },
+      "extraction": {
+        "kind": "detail",
+        "fields": [
+          {
+            "key": "Source",
+            "selector": "meta[property='og:site_name']",
+            "value": "text",
+            "attr": "content"
+          },
+          {
+            "key": "Date",
+            "selector": "main, article, body",
+            "value": "text",
+            "transforms": ["extractYear"]
+          },
+          {
+            "key": "Section",
+            "selector": "main h1, article h1, #content h1",
+            "value": "text",
+            "required": true,
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "Recommendation summary",
+            "selector": "main p, article p, .recommendation p",
+            "value": "text",
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "Strength/grade",
+            "selector": "main, article, body",
+            "value": "text",
+            "transforms": ["trim", "collapseWhitespace"]
+          }
+        ],
+        "outputColumns": ["Source", "Date", "Section", "Recommendation summary", "Strength/grade"]
+      },
+      "notes": [
+        "NICE pages often split overview and recommendations into separate chapter routes.",
+        "Strength or grade may be absent and should remain blank when not explicit."
+      ]
+    }
+  ]
+}

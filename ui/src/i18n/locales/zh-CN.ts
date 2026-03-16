@@ -18,14 +18,16 @@ export const zh_CN: TranslationMap = {
   },
   nav: {
     chat: "聊天",
-    control: "控制",
-    agent: "代理",
+    medical: "医疗",
+    workspace: "工作台",
+    library: "技能库",
     settings: "设置",
     expand: "展开侧边栏",
     collapse: "折叠侧边栏",
     resize: "调整侧边栏大小",
   },
   tabs: {
+    medical: "医疗",
     agents: "代理",
     overview: "概览",
     channels: "频道",
@@ -46,6 +48,7 @@ export const zh_CN: TranslationMap = {
     logs: "日志",
   },
   subtitles: {
+    medical: "更省 token、更快浏览、更懂医疗场景的智能工作台。",
     agents: "工作区、工具、身份。",
     overview: "状态、入口点、健康。",
     channels: "频道和设置。",
@@ -56,7 +59,7 @@ export const zh_CN: TranslationMap = {
     skills: "技能和 API 密钥。",
     nodes: "配对设备和命令。",
     chat: "网关聊天，快速干预。",
-    config: "编辑 openclaw.json。",
+    config: "面向医疗工作流的设置，聚焦浏览器、模型、技能与工作区。",
     communications: "频道、消息和音频设置。",
     appearance: "主题、界面和设置向导设置。",
     automation: "命令、钩子、定时任务和插件设置。",
@@ -64,6 +67,14 @@ export const zh_CN: TranslationMap = {
     aiAgents: "代理、模型、技能、工具、记忆和会话设置。",
     debug: "快照、事件、RPC。",
     logs: "实时网关日志。",
+  },
+  config: {
+    medclawRootLabel: "MedClaw 设置",
+    basic: "基础",
+    advanced: "高级",
+    advancedForPowerUsers: "高级（仅高级用户）",
+    basicActiveHint: "当前显示日常最常用的设置，适合大多数医疗用户。",
+    advancedActiveHint: "当前显示部署、安全与维护相关设置，建议高级用户使用。",
   },
   overview: {
     access: {

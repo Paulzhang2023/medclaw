@@ -2,28 +2,16 @@ import { t } from "../i18n/index.ts";
 import type { IconName } from "./icons.js";
 
 export const TAB_GROUPS = [
-  { label: "chat", tabs: ["chat"] },
-  {
-    label: "control",
-    tabs: ["overview", "channels", "instances", "sessions", "usage", "cron"],
-  },
-  { label: "agent", tabs: ["agents", "skills", "nodes"] },
+  { label: "workspace", tabs: ["medical", "chat", "sessions", "usage"] },
+  { label: "library", tabs: ["skills"] },
   {
     label: "settings",
-    tabs: [
-      "config",
-      "communications",
-      "appearance",
-      "automation",
-      "infrastructure",
-      "aiAgents",
-      "debug",
-      "logs",
-    ],
+    tabs: ["config"],
   },
 ] as const;
 
 export type Tab =
+  | "medical"
   | "agents"
   | "overview"
   | "channels"
@@ -44,6 +32,7 @@ export type Tab =
   | "logs";
 
 const TAB_PATHS: Record<Tab, string> = {
+  medical: "/medical",
   agents: "/agents",
   overview: "/overview",
   channels: "/channels",
@@ -118,7 +107,7 @@ export function tabFromPath(pathname: string, basePath = ""): Tab | null {
     normalized = "/";
   }
   if (normalized === "/") {
-    return "chat";
+    return "medical";
   }
   return PATH_TO_TAB.get(normalized) ?? null;
 }
@@ -147,6 +136,8 @@ export function inferBasePathFromPathname(pathname: string): string {
 
 export function iconForTab(tab: Tab): IconName {
   switch (tab) {
+    case "medical":
+      return "book";
     case "agents":
       return "folder";
     case "chat":

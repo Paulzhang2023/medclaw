@@ -19,14 +19,16 @@ export const en: TranslationMap = {
   },
   nav: {
     chat: "Chat",
-    control: "Control",
-    agent: "Agent",
+    medical: "Medical",
+    workspace: "Workspace",
+    library: "Library",
     settings: "Settings",
     expand: "Expand sidebar",
     collapse: "Collapse sidebar",
     resize: "Resize sidebar",
   },
   tabs: {
+    medical: "Medical",
     agents: "Agents",
     overview: "Overview",
     channels: "Channels",
@@ -47,6 +49,7 @@ export const en: TranslationMap = {
     logs: "Logs",
   },
   subtitles: {
+    medical: "Lower token use, faster browsing, and a medical-first intelligent workspace.",
     agents: "Workspaces, tools, identities.",
     overview: "Status, entry points, health.",
     channels: "Channels and settings.",
@@ -57,7 +60,7 @@ export const en: TranslationMap = {
     skills: "Skills and API keys.",
     nodes: "Paired devices and commands.",
     chat: "Gateway chat for quick interventions.",
-    config: "Edit openclaw.json.",
+    config: "Medical-first settings for browser, models, skills, and your workspace.",
     communications: "Channels, messages, and audio settings.",
     appearance: "Theme, UI, and setup wizard settings.",
     automation: "Commands, hooks, cron, and plugins.",
@@ -65,6 +68,15 @@ export const en: TranslationMap = {
     aiAgents: "Agents, models, skills, tools, memory, session.",
     debug: "Snapshots, events, RPC.",
     logs: "Live gateway logs.",
+  },
+  config: {
+    medclawRootLabel: "MedClaw Settings",
+    basic: "Basic",
+    advanced: "Advanced",
+    advancedForPowerUsers: "Advanced (Power Users)",
+    basicActiveHint: "Showing the everyday settings most medical users need.",
+    advancedActiveHint:
+      "Showing deployment, security, and maintenance settings for advanced users.",
   },
   overview: {
     access: {

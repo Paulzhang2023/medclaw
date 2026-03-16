@@ -1,0 +1,55 @@
+{
+  agents: {
+    list: [
+      {
+        id: "medclaw",
+        default: true,
+        identity: {
+          name: "MedClaw",
+          theme: "clinical evidence copilot",
+          emoji: "🩺",
+        },
+      },
+    ],
+    defaults: {
+      workspace: "~/.medclaw/workspace",
+      imageMaxDimensionPx: 960,
+    },
+  },
+
+  gateway: {
+    mode: "local",
+  },
+
+  tools: {
+    profile: "coding",
+  },
+
+  browser: {
+    snapshotDefaults: {
+      mode: "efficient",
+    },
+  },
+
+  skills: {
+    allowBundled: [
+      "med-pubmed-search",
+      "med-clinicaltrials-search",
+      "med-guideline-review",
+      "med-deepevidence-entry",
+      "med-seekevidence-entry",
+      "nano-pdf",
+      "summarize",
+    ],
+  },
+
+  env: {
+    vars: {
+      MEDCLAW_SEEKEVIDENCE_URL: "https://seekevidence.medsci.cn",
+      MEDCLAW_DEEPEVIDENCE_URL: "https://deepevid.medsci.cn",
+      // For local registry development, set:
+      // MEDCLAW_ADAPTER_REGISTRY_URL: "http://127.0.0.1:4318",
+      // MEDCLAW_ADAPTER_REGISTRY_TOKEN: "medclaw-local-dev-token",
+    },
+  },
+}

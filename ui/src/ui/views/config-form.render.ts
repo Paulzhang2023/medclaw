@@ -243,11 +243,20 @@ const sectionIcons = {
 export const SECTION_META: Record<string, { label: string; description: string }> = {
   env: {
     label: "Environment Variables",
-    description: "Environment variables passed to the gateway process",
+    description:
+      "Advanced runtime variables used for deployment, integrations, and secure local/remote operation.",
   },
-  update: { label: "Updates", description: "Auto-update settings and release channel" },
+  update: {
+    label: "Updates",
+    description:
+      "Control how MedClaw checks for new versions and how upgrade-related maintenance is handled.",
+  },
   agents: { label: "Agents", description: "Agent configurations, models, and identities" },
-  auth: { label: "Authentication", description: "API keys and authentication profiles" },
+  auth: {
+    label: "Authentication",
+    description:
+      "Manage model credentials, secure sign-in behavior, and protected access to MedClaw services.",
+  },
   channels: {
     label: "Channels",
     description: "Messaging channels (Telegram, Discord, Slack, etc.)",
@@ -257,7 +266,11 @@ export const SECTION_META: Record<string, { label: string; description: string }
   hooks: { label: "Hooks", description: "Webhooks and event hooks" },
   skills: { label: "Skills", description: "Skill packs and capabilities" },
   tools: { label: "Tools", description: "Tool configurations (browser, search, etc.)" },
-  gateway: { label: "Gateway", description: "Gateway server settings (port, auth, binding)" },
+  gateway: {
+    label: "Gateway",
+    description:
+      "Network and service settings for how MedClaw connects locally, exposes services, and stays reachable.",
+  },
   wizard: { label: "Setup Wizard", description: "Setup wizard state and history" },
   // Additional sections
   meta: { label: "Metadata", description: "Gateway metadata and version information" },

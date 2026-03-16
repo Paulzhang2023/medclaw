@@ -70,7 +70,9 @@ import { loadNodes } from "./controllers/nodes.ts";
 import { loadPresence } from "./controllers/presence.ts";
 import { deleteSessionAndRefresh, loadSessions, patchSession } from "./controllers/sessions.ts";
 import {
+  installCloudLibrarySkill,
   installSkill,
+  loadSkillsLibrary,
   loadSkills,
   saveSkillApiKey,
   updateSkillEdit,
@@ -94,6 +96,7 @@ import { renderConfig } from "./views/config.ts";
 import { renderExecApprovalPrompt } from "./views/exec-approval.ts";
 import { renderGatewayUrlConfirmation } from "./views/gateway-url-confirmation.ts";
 import { renderLoginGate } from "./views/login-gate.ts";
+import { renderMedical } from "./views/medical.ts";
 import { renderOverview } from "./views/overview.ts";
 
 // Lazy-loaded view modules – deferred so the initial bundle stays small.
@@ -260,6 +263,15 @@ const AI_AGENTS_SECTION_KEYS = [
   "memory",
   "session",
 ] as const;
+const MEDCLAW_BASIC_CONFIG_SECTIONS = [
+  "__appearance__",
+  "browser",
+  "models",
+  "skills",
+  "session",
+] as const;
+const MEDCLAW_ADVANCED_CONFIG_SECTIONS = ["env", "auth", "gateway", "agents", "update"] as const;
+const MEDCLAW_DEFAULT_CONFIG_SECTION = "browser";
 type CommunicationSectionKey = (typeof COMMUNICATION_SECTION_KEYS)[number];
 type AppearanceSectionKey = (typeof APPEARANCE_SECTION_KEYS)[number];
 type AutomationSectionKey = (typeof AUTOMATION_SECTION_KEYS)[number];
@@ -456,10 +468,10 @@ export function renderApp(state: AppViewState) {
                   navCollapsed
                     ? nothing
                     : html`
-                        <img class="sidebar-brand__logo" src="${agentLogoUrl(basePath)}" alt="OpenClaw" />
+                        <img class="sidebar-brand__logo" src="${agentLogoUrl(basePath)}" alt="MedClaw" />
                         <span class="sidebar-brand__copy">
-                          <span class="sidebar-brand__eyebrow">${t("nav.control")}</span>
-                          <span class="sidebar-brand__title">OpenClaw</span>
+                          <span class="sidebar-brand__eyebrow">${t("nav.workspace")}</span>
+                          <span class="sidebar-brand__title">MedClaw</span>
                         </span>
                       `
                 }
@@ -608,6 +620,8 @@ export function renderApp(state: AppViewState) {
               </div>
             </section>`
         }
+
+        ${state.tab === "medical" ? renderMedical() : nothing}
 
         ${
           state.tab === "overview"
@@ -1230,16 +1244,26 @@ export function renderApp(state: AppViewState) {
                   report: state.skillsReport,
                   error: state.skillsError,
                   filter: state.skillsFilter,
+                  libraryLoading: state.skillsLibraryLoading,
+                  library: state.skillsLibrary,
+                  libraryError: state.skillsLibraryError,
+                  libraryCategory: state.skillsLibraryCategory,
                   edits: state.skillEdits,
                   messages: state.skillMessages,
                   busyKey: state.skillsBusyKey,
                   onFilterChange: (next) => (state.skillsFilter = next),
                   onRefresh: () => loadSkills(state, { clearMessages: true }),
+                  onLibraryCategoryChange: async (next) => {
+                    state.skillsLibraryCategory = next;
+                    await loadSkillsLibrary(state);
+                  },
+                  onLibraryRefresh: () => loadSkillsLibrary(state),
                   onToggle: (key, enabled) => updateSkillEnabled(state, key, enabled),
                   onEdit: (key, value) => updateSkillEdit(state, key, value),
                   onSaveKey: (key) => saveSkillApiKey(state, key),
                   onInstall: (skillKey, name, installId) =>
                     installSkill(state, skillKey, name, installId),
+                  onInstallCloudSkill: (skillId) => installCloudLibrarySkill(state, skillId),
                 }),
               )
             : nothing
@@ -1466,48 +1490,42 @@ export function renderApp(state: AppViewState) {
                 schemaLoading: state.configSchemaLoading,
                 uiHints: state.configUiHints,
                 formMode: state.configFormMode,
-                showModeToggle: true,
+                showModeToggle: false,
+                detailLevel: state.configDetailLevel,
                 formValue: state.configForm,
                 originalValue: state.configFormOriginal,
                 searchQuery: state.configSearchQuery,
-                activeSection:
-                  state.configActiveSection &&
-                  (COMMUNICATION_SECTION_KEYS.includes(
-                    state.configActiveSection as CommunicationSectionKey,
-                  ) ||
-                    APPEARANCE_SECTION_KEYS.includes(
-                      state.configActiveSection as AppearanceSectionKey,
+                activeSection: (() => {
+                  const allowedSections =
+                    state.configDetailLevel === "advanced"
+                      ? MEDCLAW_ADVANCED_CONFIG_SECTIONS
+                      : MEDCLAW_BASIC_CONFIG_SECTIONS;
+                  const normalizedSection =
+                    state.configActiveSection &&
+                    (COMMUNICATION_SECTION_KEYS.includes(
+                      state.configActiveSection as CommunicationSectionKey,
                     ) ||
-                    AUTOMATION_SECTION_KEYS.includes(
-                      state.configActiveSection as AutomationSectionKey,
-                    ) ||
-                    INFRASTRUCTURE_SECTION_KEYS.includes(
-                      state.configActiveSection as InfrastructureSectionKey,
-                    ) ||
-                    AI_AGENTS_SECTION_KEYS.includes(
-                      state.configActiveSection as AiAgentsSectionKey,
-                    ))
-                    ? null
-                    : state.configActiveSection,
-                activeSubsection:
-                  state.configActiveSection &&
-                  (COMMUNICATION_SECTION_KEYS.includes(
-                    state.configActiveSection as CommunicationSectionKey,
-                  ) ||
-                    APPEARANCE_SECTION_KEYS.includes(
-                      state.configActiveSection as AppearanceSectionKey,
-                    ) ||
-                    AUTOMATION_SECTION_KEYS.includes(
-                      state.configActiveSection as AutomationSectionKey,
-                    ) ||
-                    INFRASTRUCTURE_SECTION_KEYS.includes(
-                      state.configActiveSection as InfrastructureSectionKey,
-                    ) ||
-                    AI_AGENTS_SECTION_KEYS.includes(
-                      state.configActiveSection as AiAgentsSectionKey,
-                    ))
-                    ? null
-                    : state.configActiveSubsection,
+                      APPEARANCE_SECTION_KEYS.includes(
+                        state.configActiveSection as AppearanceSectionKey,
+                      ) ||
+                      AUTOMATION_SECTION_KEYS.includes(
+                        state.configActiveSection as AutomationSectionKey,
+                      ) ||
+                      INFRASTRUCTURE_SECTION_KEYS.includes(
+                        state.configActiveSection as InfrastructureSectionKey,
+                      ) ||
+                      AI_AGENTS_SECTION_KEYS.includes(
+                        state.configActiveSection as AiAgentsSectionKey,
+                      ))
+                      ? MEDCLAW_DEFAULT_CONFIG_SECTION
+                      : (state.configActiveSection ?? MEDCLAW_DEFAULT_CONFIG_SECTION);
+                  return allowedSections.includes(
+                    normalizedSection as (typeof allowedSections)[number],
+                  )
+                    ? normalizedSection
+                    : allowedSections[0];
+                })(),
+                activeSubsection: null,
                 onRawChange: (next) => {
                   state.configRaw = next;
                 },
@@ -1519,6 +1537,14 @@ export function renderApp(state: AppViewState) {
                   state.configActiveSubsection = null;
                 },
                 onSubsectionChange: (section) => (state.configActiveSubsection = section),
+                onDetailLevelChange: (level) => {
+                  state.configDetailLevel = level;
+                  state.configActiveSection =
+                    level === "advanced"
+                      ? MEDCLAW_ADVANCED_CONFIG_SECTIONS[0]
+                      : MEDCLAW_BASIC_CONFIG_SECTIONS[0];
+                  state.configActiveSubsection = null;
+                },
                 onReload: () => loadConfig(state),
                 onSave: () => saveConfig(state),
                 onApply: () => applyConfig(state),
@@ -1532,15 +1558,12 @@ export function renderApp(state: AppViewState) {
                 gatewayUrl: state.settings.gatewayUrl,
                 assistantName: state.assistantName,
                 configPath: state.configSnapshot?.path ?? null,
-                excludeSections: [
-                  ...COMMUNICATION_SECTION_KEYS,
-                  ...AUTOMATION_SECTION_KEYS,
-                  ...INFRASTRUCTURE_SECTION_KEYS,
-                  ...AI_AGENTS_SECTION_KEYS,
-                  "ui",
-                  "wizard",
-                ],
-                includeVirtualSections: false,
+                navRootLabel: t("config.medclawRootLabel"),
+                includeSections:
+                  state.configDetailLevel === "advanced"
+                    ? [...MEDCLAW_ADVANCED_CONFIG_SECTIONS]
+                    : [...MEDCLAW_BASIC_CONFIG_SECTIONS],
+                includeVirtualSections: true,
               })
             : nothing
         }

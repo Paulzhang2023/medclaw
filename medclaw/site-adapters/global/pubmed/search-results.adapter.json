@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "pubmed.search-results.v1",
+  "site": "pubmed",
+  "scope": "global",
+  "owner": "MedClaw",
+  "priority": 100,
+  "tags": ["literature", "pubmed", "search-results"],
+  "pages": [
+    {
+      "pageType": "search-results",
+      "match": {
+        "hosts": ["pubmed.ncbi.nlm.nih.gov"],
+        "pathPrefixes": ["/"],
+        "searchParamKeys": ["term"]
+      },
+      "ready": {
+        "waitForSelector": "article.full-docsum, div.docsum-content",
+        "snapshotMode": "efficient"
+      },
+      "extraction": {
+        "kind": "list",
+        "row": {
+          "rowSelector": "article.full-docsum",
+          "dedupeBy": "PMID",
+          "fields": [
+            {
+              "key": "PMID",
+              "selector": "a.docsum-title",
+              "value": "href",
+              "transforms": ["trim", "extractPmid"]
+            },
+            {
+              "key": "Title",
+              "selector": "a.docsum-title",
+              "value": "text",
+              "required": true,
+              "transforms": ["trim", "collapseWhitespace"]
+            },
+            {
+              "key": "Year",
+              "selector": ".docsum-journal-citation",
+              "value": "text",
+              "transforms": ["trim", "collapseWhitespace", "extractYear"]
+            },
+            {
+              "key": "Journal",
+              "selector": ".docsum-journal-citation",
+              "value": "text",
+              "transforms": ["trim", "collapseWhitespace"]
+            },
+            {
+              "key": "Why it matters",
+              "selector": ".full-view-snippet, .docsum-snippet",
+              "value": "text",
+              "transforms": ["trim", "collapseWhitespace"]
+            }
+          ]
+        },
+        "outputColumns": ["PMID", "Year", "Title", "Journal", "Why it matters"]
+      },
+      "notes": ["PMID is derived from the result URL.", "Year is derived from the citation text."]
+    }
+  ]
+}

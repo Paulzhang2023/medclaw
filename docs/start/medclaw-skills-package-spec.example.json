@@ -1,0 +1,16 @@
+{
+  "id": "medclaw.statistics.table-analysis",
+  "slug": "medclaw-table-analysis",
+  "name": "MedClaw Table Analysis",
+  "version": "0.1.0",
+  "category": "statistics",
+  "summary": "Analyze uploaded tables, summarize key findings, and support medical statistics workflows.",
+  "description": "A cloud-delivered MedClaw skill for medical table analysis and structured statistical review.",
+  "featured": true,
+  "tags": ["statistics", "tables", "medical-research"],
+  "homepageUrl": "https://medsci.cn",
+  "sourceUrl": "https://github.com/MedSci/medclaw",
+  "packageUrl": "https://example.com/packages/medclaw-table-analysis-0.1.0.zip",
+  "archiveKind": "zip",
+  "checksumSha256": "replace-with-real-sha256"
+}

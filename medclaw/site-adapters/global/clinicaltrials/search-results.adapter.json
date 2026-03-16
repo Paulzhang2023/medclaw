@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "clinicaltrials.search-results.v1",
+  "site": "clinicaltrials",
+  "scope": "global",
+  "owner": "MedClaw",
+  "priority": 100,
+  "tags": ["registry", "clinicaltrials", "search-results"],
+  "pages": [
+    {
+      "pageType": "search-results",
+      "match": {
+        "hosts": ["clinicaltrials.gov"],
+        "pathPrefixes": ["/search"],
+        "searchParamKeys": ["cond", "term", "aggFilters"]
+      },
+      "ready": {
+        "waitForSelector": "a[href*=\"/study/NCT\"]",
+        "snapshotMode": "efficient"
+      },
+      "extraction": {
+        "kind": "list",
+        "row": {
+          "rowSelector": "a[href*=\"/study/NCT\"]",
+          "dedupeBy": "NCT ID",
+          "fields": [
+            {
+              "key": "NCT ID",
+              "selector": "$row",
+              "value": "href",
+              "required": true,
+              "transforms": ["trim", "extractNctId", "uppercase"]
+            },
+            {
+              "key": "Title",
+              "selector": "$row",
+              "value": "text",
+              "required": true,
+              "transforms": ["trim", "collapseWhitespace"]
+            },
+            {
+              "key": "Status",
+              "selector": "$row",
+              "value": "text",
+              "transforms": ["extractClinicalTrialStatus"]
+            },
+            {
+              "key": "Phase",
+              "selector": "$row",
+              "value": "text",
+              "transforms": ["extractClinicalTrialPhase"]
+            },
+            {
+              "key": "Why relevant",
+              "selector": "$row",
+              "value": "text",
+              "transforms": ["trim", "collapseWhitespace"]
+            }
+          ]
+        },
+        "outputColumns": ["NCT ID", "Status", "Phase", "Title", "Why relevant"]
+      },
+      "notes": [
+        "Status and Phase are derived from row text.",
+        "ClinicalTrials layouts vary; add detail-page adapters next."
+      ]
+    }
+  ]
+}

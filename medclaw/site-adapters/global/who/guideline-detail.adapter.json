@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "guideline.who.detail.v1",
+  "site": "guideline",
+  "scope": "global",
+  "owner": "MedClaw",
+  "priority": 95,
+  "tags": ["guideline", "who"],
+  "pages": [
+    {
+      "pageType": "guideline-detail",
+      "match": {
+        "hosts": ["who.int"],
+        "pathPrefixes": ["/publications", "/publications-detail-redirect", "/teams/"]
+      },
+      "ready": {
+        "waitForSelector": "h1, main h1",
+        "snapshotMode": "efficient"
+      },
+      "extraction": {
+        "kind": "detail",
+        "fields": [
+          {
+            "key": "Source",
+            "selector": "meta[property='og:site_name']",
+            "value": "text",
+            "attr": "content"
+          },
+          {
+            "key": "Date",
+            "selector": "main, article, body",
+            "value": "text",
+            "transforms": ["extractYear"]
+          },
+          {
+            "key": "Section",
+            "selector": "h1, main h1",
+            "value": "text",
+            "required": true,
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "Recommendation summary",
+            "selector": "main p, article p, .sf_colsIn p",
+            "value": "text",
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "Strength/grade",
+            "selector": "main, article, body",
+            "value": "text",
+            "transforms": ["trim", "collapseWhitespace"]
+          }
+        ],
+        "outputColumns": ["Source", "Date", "Section", "Recommendation summary", "Strength/grade"]
+      },
+      "notes": [
+        "WHO guideline pages often use publication detail layouts.",
+        "Recommendation grading may need later site-specific refinement."
+      ]
+    }
+  ]
+}

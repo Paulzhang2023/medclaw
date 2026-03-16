@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "medicalsite.dxy.detail.v1",
+  "site": "medicalsite",
+  "scope": "global",
+  "owner": "MedClaw",
+  "priority": 95,
+  "tags": ["medicalsite", "dxy"],
+  "pages": [
+    {
+      "pageType": "article-detail",
+      "match": {
+        "hosts": ["dxy.cn"],
+        "pathPrefixes": ["/article/"]
+      },
+      "ready": {
+        "waitForSelector": "h1, .title, .article-title",
+        "snapshotMode": "efficient"
+      },
+      "extraction": {
+        "kind": "detail",
+        "fields": [
+          {
+            "key": "Source",
+            "selector": "meta[property='og:site_name']",
+            "value": "text",
+            "attr": "content"
+          },
+          {
+            "key": "Date",
+            "selector": "time, .source, .time, .article-info",
+            "value": "text",
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "Title",
+            "selector": "h1, .title, .article-title",
+            "value": "text",
+            "required": true,
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "Summary",
+            "selector": ".article-content p, article p, .content p",
+            "value": "text",
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "URL",
+            "selector": "meta[property='og:url']",
+            "value": "text",
+            "attr": "content"
+          }
+        ],
+        "outputColumns": ["Source", "Date", "Title", "Summary", "URL"]
+      }
+    }
+  ]
+}

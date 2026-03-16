@@ -599,6 +599,37 @@ export type SkillStatusReport = {
   skills: SkillStatusEntry[];
 };
 
+export type CloudSkillCategory =
+  | "statistics"
+  | "bioinformatics"
+  | "writing"
+  | "literature"
+  | "clinical"
+  | "productivity"
+  | "other";
+
+export type CloudSkillSummary = {
+  id: string;
+  slug: string;
+  name: string;
+  version: string;
+  category: CloudSkillCategory;
+  summary: string;
+  description?: string;
+  featured?: boolean;
+  tags?: string[];
+  homepageUrl?: string;
+  sourceUrl?: string;
+  packageUrl: string;
+  archiveKind: "zip" | "tar.gz" | "tar.bz2";
+  checksumSha256?: string;
+};
+
+export type CloudSkillsLibraryResult = {
+  items: CloudSkillSummary[];
+  categories: CloudSkillCategory[];
+};
+
 export type StatusSummary = Record<string, unknown>;
 
 export type HealthSnapshot = Record<string, unknown>;

@@ -61,6 +61,20 @@ Check your Node version with `node --version` if you are unsure.
     See [Onboarding Wizard](/start/wizard) for details.
 
   </Step>
+  <Step title="Medical-focused setup (MedClaw)">
+    ```bash
+    openclaw medclaw --wizard
+    ```
+
+    This now defaults to the MedClaw minimal config flow: it creates or reuses `./medclaw.config.json`, applies the generated internal config, narrows the setup path, and opens the medical-oriented workflow entry points.
+
+    For repeat local starts after setup:
+
+    ```bash
+    openclaw medclaw start
+    ```
+
+  </Step>
   <Step title="Check the Gateway">
     If you installed the service, it should already be running:
 
@@ -114,6 +128,9 @@ Full environment variable reference: [Environment vars](/help/environment).
 ## Go deeper
 
 <Columns>
+  <Card title="MedClaw v0.1" href="/start/medclaw-v0.1">
+    Medical-focused starter preset, reduced UI path, and initial evidence workflow skills.
+  </Card>
   <Card title="Onboarding Wizard (details)" href="/start/wizard">
     Full CLI wizard reference and advanced options.
   </Card>

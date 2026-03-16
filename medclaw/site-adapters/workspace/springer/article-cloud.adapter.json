@@ -1,0 +1,59 @@
+{
+  "id": "article.springer.detail.v1",
+  "site": "article",
+  "tags": ["article", "springer", "nature-portfolio"],
+  "owner": "MedClaw",
+  "pages": [
+    {
+      "match": {
+        "hosts": ["link.springer.com"],
+        "pathPrefixes": ["/article/"]
+      },
+      "ready": {
+        "snapshotMode": "efficient",
+        "waitForSelector": "h1"
+      },
+      "pageType": "article-detail",
+      "extraction": {
+        "kind": "detail",
+        "fields": [
+          {
+            "key": "Source",
+            "attr": "content",
+            "value": "text",
+            "selector": "meta[property='og:site_name']"
+          },
+          {
+            "key": "Date",
+            "value": "text",
+            "selector": "time, [data-test='published-date'], .c-article-identifiers__item",
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "Title",
+            "value": "text",
+            "required": true,
+            "selector": "h1",
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "Summary",
+            "value": "text",
+            "selector": "#Abs1-content p, section#Abs1 p, section[aria-labelledby*='Abs'] p, .c-article-section__content p",
+            "transforms": ["trim", "collapseWhitespace"]
+          },
+          {
+            "key": "DOI",
+            "value": "text",
+            "selector": "main, article, body",
+            "transforms": ["extractDoi"]
+          }
+        ],
+        "outputColumns": ["Source", "Date", "Title", "Summary", "DOI"]
+      }
+    }
+  ],
+  "scope": "global",
+  "priority": 100,
+  "schemaVersion": 1
+}

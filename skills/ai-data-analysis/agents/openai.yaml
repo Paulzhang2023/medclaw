@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Data Analysis"
+  short_description: "Profile, clean, chart, and optionally run local SAS"
+  default_prompt: "Use $ai-data-analysis to inspect this dataset, produce summary statistics, clean it, or run a local SAS program if SAS is installed."

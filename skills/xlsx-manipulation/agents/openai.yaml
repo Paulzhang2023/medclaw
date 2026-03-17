@@ -1,0 +1,4 @@
+interface:
+  display_name: "XLSX Manipulation"
+  short_description: "Create and edit native Excel workbooks"
+  default_prompt: "Use $xlsx-manipulation to update this local Excel workbook with the requested formulas, formatting, structure, or charts."

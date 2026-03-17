@@ -1,0 +1,4 @@
+interface:
+  display_name: "Long-Term Memory"
+  short_description: "Capture and reuse stable preferences and context."
+  default_prompt: "Use $long-term-memory to capture stable preferences, recurring constraints, and reusable context for future tasks."

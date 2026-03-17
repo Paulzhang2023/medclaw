@@ -1,0 +1,4 @@
+interface:
+  display_name: "Skill Intake Auditor"
+  short_description: "Audit external skills before install or porting."
+  default_prompt: "Use $skill-intake-auditor to inspect an external skill, assess safety and Codex compatibility, and decide whether to install, reject, or port it."

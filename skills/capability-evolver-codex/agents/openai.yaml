@@ -1,0 +1,4 @@
+interface:
+  display_name: "Capability Evolver Codex"
+  short_description: "Safe self-improvement loops for Codex workflows."
+  default_prompt: "Use $capability-evolver-codex to review failures, extract durable improvements, and propose safe Codex-native workflow upgrades."

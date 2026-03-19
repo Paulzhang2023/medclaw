@@ -3,6 +3,7 @@ import { Value } from "@sinclair/typebox/value";
 import {
   buildMedClawPreset,
   MEDCLAW_DEFAULT_DEEPEVIDENCE_URL,
+  MEDCLAW_DEFAULT_REGISTRY_URL,
   MEDCLAW_DEFAULT_SEEKEVIDENCE_URL,
   MEDCLAW_DEFAULT_WORKSPACE,
   MEDCLAW_LOCAL_REGISTRY_URL,
@@ -112,7 +113,7 @@ export const MEDCLAW_MINIMAL_CONFIG_EXAMPLE: MedClawMinimalConfig = {
   },
   registry: {
     mode: "cloud",
-    url: "https://adapters.medclaw.ai",
+    url: MEDCLAW_DEFAULT_REGISTRY_URL,
     tokenEnv: "MEDCLAW_ADAPTER_REGISTRY_TOKEN",
     autoCheck: true,
   },

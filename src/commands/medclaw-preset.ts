@@ -3,6 +3,7 @@ import type { OpenClawConfig } from "../config/config.js";
 export const MEDCLAW_DEFAULT_WORKSPACE = "~/.medclaw/workspace";
 export const MEDCLAW_DEFAULT_SEEKEVIDENCE_URL = "https://seekevidence.medsci.cn";
 export const MEDCLAW_DEFAULT_DEEPEVIDENCE_URL = "https://deepevid.medsci.cn";
+export const MEDCLAW_DEFAULT_REGISTRY_URL = "https://seekevidence.medon.com.cn/medclaw/";
 export const MEDCLAW_LOCAL_REGISTRY_URL = "http://127.0.0.1:4318";
 
 export function buildMedClawPreset(params?: {

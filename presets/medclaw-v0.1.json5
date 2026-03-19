@@ -79,9 +79,11 @@
     vars: {
       MEDCLAW_SEEKEVIDENCE_URL: "https://seekevidence.medsci.cn",
       MEDCLAW_DEEPEVIDENCE_URL: "https://deepevid.medsci.cn",
-      // For local registry development, set:
+      // Default cloud registry:
+      // MEDCLAW_ADAPTER_REGISTRY_URL: "https://seekevidence.medon.com.cn/medclaw/",
+      // MEDCLAW_ADAPTER_REGISTRY_TOKEN: "<set this in your environment>",
+      // For local registry development, override with:
       // MEDCLAW_ADAPTER_REGISTRY_URL: "http://127.0.0.1:4318",
-      // MEDCLAW_ADAPTER_REGISTRY_TOKEN: "medclaw-local-dev-token",
     },
   },
 }

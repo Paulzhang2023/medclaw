@@ -143,7 +143,7 @@ Recommended user-facing file:
   },
   "registry": {
     "mode": "cloud",
-    "url": "https://adapters.medclaw.ai",
+    "url": "https://seekevidence.medon.com.cn/medclaw/",
     "tokenEnv": "MEDCLAW_ADAPTER_REGISTRY_TOKEN",
     "autoCheck": true
   },
@@ -153,6 +153,12 @@ Recommended user-facing file:
     "askBeforeUpload": true
   }
 }
+```
+
+Set the token outside the file, for example:
+
+```bash
+export MEDCLAW_ADAPTER_REGISTRY_TOKEN=your-registry-token
 ```
 
 ## Local development variant

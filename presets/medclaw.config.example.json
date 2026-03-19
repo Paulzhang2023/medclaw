@@ -28,7 +28,7 @@
   },
   "registry": {
     "mode": "cloud",
-    "url": "https://adapters.medclaw.ai",
+    "url": "https://seekevidence.medon.com.cn/medclaw/",
     "tokenEnv": "MEDCLAW_ADAPTER_REGISTRY_TOKEN",
     "autoCheck": true
   },

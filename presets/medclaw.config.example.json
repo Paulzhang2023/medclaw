@@ -29,7 +29,8 @@
   "registry": {
     "mode": "cloud",
     "url": "https://seekevidence.medon.com.cn/medclaw/",
-    "tokenEnv": "MEDCLAW_ADAPTER_REGISTRY_TOKEN",
+    "readTokenEnv": "MEDCLAW_ADAPTER_REGISTRY_READ_TOKEN",
+    "uploadTokenEnv": "MEDCLAW_ADAPTER_REGISTRY_UPLOAD_TOKEN",
     "autoCheck": true
   },
   "privacy": {

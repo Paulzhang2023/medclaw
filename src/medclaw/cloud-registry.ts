@@ -54,6 +54,24 @@ function resolveRegistryToken() {
   return fromConfig || process.env.MEDCLAW_ADAPTER_REGISTRY_TOKEN?.trim() || "";
 }
 
+function resolveRegistryReadToken() {
+  const cfg = loadConfig();
+  const fromConfig = cfg.env?.vars?.MEDCLAW_ADAPTER_REGISTRY_READ_TOKEN?.trim();
+  return (
+    fromConfig || process.env.MEDCLAW_ADAPTER_REGISTRY_READ_TOKEN?.trim() || resolveRegistryToken()
+  );
+}
+
+function resolveRegistryUploadToken() {
+  const cfg = loadConfig();
+  const fromConfig = cfg.env?.vars?.MEDCLAW_ADAPTER_REGISTRY_UPLOAD_TOKEN?.trim();
+  return (
+    fromConfig ||
+    process.env.MEDCLAW_ADAPTER_REGISTRY_UPLOAD_TOKEN?.trim() ||
+    resolveRegistryToken()
+  );
+}
+
 function requireRegistryUrl() {
   const baseUrl = resolveRegistryUrl();
   if (!baseUrl) {
@@ -64,8 +82,8 @@ function requireRegistryUrl() {
   return baseUrl.replace(/\/$/, "");
 }
 
-async function fetchJson(url: string, init?: RequestInit) {
-  const token = resolveRegistryToken();
+async function fetchJson(url: string, init?: RequestInit, authMode: "read" | "upload" = "read") {
+  const token = authMode === "upload" ? resolveRegistryUploadToken() : resolveRegistryReadToken();
   const headers = new Headers(init?.headers ?? {});
   if (token && !headers.has("Authorization")) {
     headers.set("Authorization", `Bearer ${token}`);
@@ -101,11 +119,15 @@ export async function uploadAdapterToCloud(params: {
   if (!Value.Check(MedClawCloudPublishRequestSchema, payload)) {
     throw new Error("Invalid cloud publish payload.");
   }
-  const result = await fetchJson(`${baseUrl}/v1/adapters/upload`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
+  const result = await fetchJson(
+    `${baseUrl}/v1/adapters/upload`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    },
+    "upload",
+  );
   if (!Value.Check(MedClawCloudPublishResponseSchema, result)) {
     throw new Error("Invalid cloud publish response.");
   }
@@ -124,7 +146,7 @@ export async function listCloudAdapters(params?: {
   if (params?.host?.trim()) {
     url.searchParams.set("host", params.host.trim());
   }
-  const result = await fetchJson(url.toString());
+  const result = await fetchJson(url.toString(), undefined, "read");
   if (!Value.Check(MedClawCloudAdapterListResponseSchema, result)) {
     throw new Error("Invalid cloud adapter list response.");
   }
@@ -136,7 +158,11 @@ export async function installCloudAdapter(params: {
   target: "workspace" | "global";
 }): Promise<{ adapterPath: string; coveragePath?: string }> {
   const baseUrl = requireRegistryUrl();
-  const result = await fetchJson(`${baseUrl}/v1/adapters/${encodeURIComponent(params.id)}`);
+  const result = await fetchJson(
+    `${baseUrl}/v1/adapters/${encodeURIComponent(params.id)}`,
+    undefined,
+    "read",
+  );
   if (!Value.Check(MedClawCloudInstallResponseSchema, result)) {
     throw new Error("Invalid cloud adapter install response.");
   }

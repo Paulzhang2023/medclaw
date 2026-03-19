@@ -161,6 +161,13 @@ Set the token outside the file, for example:
 export MEDCLAW_ADAPTER_REGISTRY_TOKEN=your-registry-token
 ```
 
+If you use separate client roles, prefer:
+
+```bash
+export MEDCLAW_ADAPTER_REGISTRY_READ_TOKEN=your-read-token
+export MEDCLAW_ADAPTER_REGISTRY_UPLOAD_TOKEN=your-upload-token
+```
+
 ## Local development variant
 
 For local development:

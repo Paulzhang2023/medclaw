@@ -69,6 +69,8 @@ export const MedClawMinimalConfigSchema = Type.Object({
       mode: Type.Optional(MedClawRegistryModeSchema),
       url: Type.Optional(Type.String()),
       tokenEnv: Type.Optional(Type.String()),
+      readTokenEnv: Type.Optional(Type.String()),
+      uploadTokenEnv: Type.Optional(Type.String()),
       autoCheck: Type.Optional(Type.Boolean()),
     }),
   ),
@@ -114,7 +116,8 @@ export const MEDCLAW_MINIMAL_CONFIG_EXAMPLE: MedClawMinimalConfig = {
   registry: {
     mode: "cloud",
     url: MEDCLAW_DEFAULT_REGISTRY_URL,
-    tokenEnv: "MEDCLAW_ADAPTER_REGISTRY_TOKEN",
+    readTokenEnv: "MEDCLAW_ADAPTER_REGISTRY_READ_TOKEN",
+    uploadTokenEnv: "MEDCLAW_ADAPTER_REGISTRY_UPLOAD_TOKEN",
     autoCheck: true,
   },
   privacy: {
@@ -137,13 +140,31 @@ function buildModelRef(config: MedClawMinimalConfig): string | undefined {
 function resolveRegistrySettings(config: MedClawMinimalConfig, env: NodeJS.ProcessEnv) {
   const mode = config.registry?.mode ?? "cloud";
   if (mode === "off") {
-    return { adapterRegistryUrl: "", adapterRegistryToken: "" };
+    return {
+      adapterRegistryUrl: "",
+      adapterRegistryToken: "",
+      adapterRegistryReadToken: "",
+      adapterRegistryUploadToken: "",
+    };
   }
   const adapterRegistryUrl =
     config.registry?.url?.trim() || (mode === "local" ? MEDCLAW_LOCAL_REGISTRY_URL : "");
   const tokenEnv = config.registry?.tokenEnv?.trim() || "";
+  const readTokenEnv = config.registry?.readTokenEnv?.trim() || "";
+  const uploadTokenEnv = config.registry?.uploadTokenEnv?.trim() || "";
   const adapterRegistryToken = tokenEnv ? env[tokenEnv]?.trim() || "" : "";
-  return { adapterRegistryUrl, adapterRegistryToken };
+  const adapterRegistryReadToken = readTokenEnv
+    ? env[readTokenEnv]?.trim() || ""
+    : adapterRegistryToken;
+  const adapterRegistryUploadToken = uploadTokenEnv
+    ? env[uploadTokenEnv]?.trim() || ""
+    : adapterRegistryToken;
+  return {
+    adapterRegistryUrl,
+    adapterRegistryToken,
+    adapterRegistryReadToken,
+    adapterRegistryUploadToken,
+  };
 }
 
 function resolveBundledSkills(config: MedClawMinimalConfig) {
@@ -218,6 +239,18 @@ export function translateMedClawMinimalConfigToOpenClawConfig(
       ...(config.profile?.region ? { MEDCLAW_REGION: config.profile.region } : {}),
       ...(config.ai?.apiKeyEnv ? { MEDCLAW_AI_API_KEY_ENV: config.ai.apiKeyEnv } : {}),
       ...(config.registry?.mode ? { MEDCLAW_ADAPTER_REGISTRY_MODE: config.registry.mode } : {}),
+      ...(config.registry?.readTokenEnv
+        ? { MEDCLAW_ADAPTER_REGISTRY_READ_TOKEN_ENV: config.registry.readTokenEnv }
+        : {}),
+      ...(config.registry?.uploadTokenEnv
+        ? { MEDCLAW_ADAPTER_REGISTRY_UPLOAD_TOKEN_ENV: config.registry.uploadTokenEnv }
+        : {}),
+      ...(registry.adapterRegistryReadToken
+        ? { MEDCLAW_ADAPTER_REGISTRY_READ_TOKEN: registry.adapterRegistryReadToken }
+        : {}),
+      ...(registry.adapterRegistryUploadToken
+        ? { MEDCLAW_ADAPTER_REGISTRY_UPLOAD_TOKEN: registry.adapterRegistryUploadToken }
+        : {}),
       ...(typeof config.registry?.autoCheck === "boolean"
         ? { MEDCLAW_ADAPTER_REGISTRY_AUTOCHECK: String(config.registry.autoCheck) }
         : {}),

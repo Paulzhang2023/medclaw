@@ -19,7 +19,8 @@ describe("validateMedClawMinimalConfig", () => {
       registry: {
         mode: "local",
         url: "http://127.0.0.1:4318",
-        tokenEnv: "MEDCLAW_ADAPTER_REGISTRY_TOKEN",
+        readTokenEnv: "MEDCLAW_ADAPTER_REGISTRY_READ_TOKEN",
+        uploadTokenEnv: "MEDCLAW_ADAPTER_REGISTRY_UPLOAD_TOKEN",
       },
     });
     expect(config.ai?.provider).toBe("openai");
@@ -37,7 +38,7 @@ describe("validateMedClawMinimalConfig", () => {
 });
 
 describe("translateMedClawMinimalConfigToOpenClawConfig", () => {
-  it("maps workspace, model, urls, and local registry token into OpenClaw config", () => {
+  it("maps workspace, model, urls, and split registry tokens into OpenClaw config", () => {
     const minimal: MedClawMinimalConfig = {
       profile: {
         workspace: "/tmp/medclaw-workspace",
@@ -67,7 +68,8 @@ describe("translateMedClawMinimalConfigToOpenClawConfig", () => {
       registry: {
         mode: "local",
         url: "http://127.0.0.1:4318",
-        tokenEnv: "MEDCLAW_ADAPTER_REGISTRY_TOKEN",
+        readTokenEnv: "MEDCLAW_ADAPTER_REGISTRY_READ_TOKEN",
+        uploadTokenEnv: "MEDCLAW_ADAPTER_REGISTRY_UPLOAD_TOKEN",
         autoCheck: true,
       },
       privacy: {
@@ -80,14 +82,17 @@ describe("translateMedClawMinimalConfigToOpenClawConfig", () => {
     const config = translateMedClawMinimalConfigToOpenClawConfig(minimal, {
       env: {
         ...process.env,
-        MEDCLAW_ADAPTER_REGISTRY_TOKEN: "test-token",
+        MEDCLAW_ADAPTER_REGISTRY_READ_TOKEN: "read-test-token",
+        MEDCLAW_ADAPTER_REGISTRY_UPLOAD_TOKEN: "upload-test-token",
       },
     });
 
     expect(config.agents?.defaults?.workspace).toBe("/tmp/medclaw-workspace");
     expect(config.agents?.defaults?.model).toEqual({ primary: "openai/gpt-5.1" });
     expect(config.env?.vars?.MEDCLAW_ADAPTER_REGISTRY_URL).toBe("http://127.0.0.1:4318");
-    expect(config.env?.vars?.MEDCLAW_ADAPTER_REGISTRY_TOKEN).toBe("test-token");
+    expect(config.env?.vars?.MEDCLAW_ADAPTER_REGISTRY_TOKEN).toBeUndefined();
+    expect(config.env?.vars?.MEDCLAW_ADAPTER_REGISTRY_READ_TOKEN).toBe("read-test-token");
+    expect(config.env?.vars?.MEDCLAW_ADAPTER_REGISTRY_UPLOAD_TOKEN).toBe("upload-test-token");
     expect(config.env?.vars?.MEDCLAW_LANGUAGE).toBe("zh-CN");
     expect(config.skills?.allowBundled).toContain("med-pubmed-search");
     expect(config.skills?.allowBundled).toContain("med-clinicaltrials-search");
@@ -103,5 +108,7 @@ describe("translateMedClawMinimalConfigToOpenClawConfig", () => {
 
     expect(config.env?.vars?.MEDCLAW_ADAPTER_REGISTRY_URL).toBeUndefined();
     expect(config.env?.vars?.MEDCLAW_ADAPTER_REGISTRY_TOKEN).toBeUndefined();
+    expect(config.env?.vars?.MEDCLAW_ADAPTER_REGISTRY_READ_TOKEN).toBeUndefined();
+    expect(config.env?.vars?.MEDCLAW_ADAPTER_REGISTRY_UPLOAD_TOKEN).toBeUndefined();
   });
 });

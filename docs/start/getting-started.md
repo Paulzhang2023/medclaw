@@ -128,7 +128,7 @@ Full environment variable reference: [Environment vars](/help/environment).
 ## Go deeper
 
 <Columns>
-  <Card title="MedClaw v0.1" href="/start/medclaw-v0.1">
+  <Card title="MedClaw V0.2（β）" href="/start/medclaw-v0.1">
     Medical-focused starter preset, reduced UI path, and initial evidence workflow skills.
   </Card>
   <Card title="Onboarding Wizard (details)" href="/start/wizard">

@@ -2,7 +2,7 @@
   <img src="docs/assets/medclaw-logo.svg" alt="MedClaw Logo" width="240" />
 </p>
 
-# MedClaw v0.1 Alpha
+# MedClaw V0.2（β）
 
 MedClaw 是基于 OpenClaw 架构打造的医学领域开源版本，面向医疗专业人士提供更轻量、更快、更省 token 的智能工作台。它不是通用型电脑 Agent 的简单换壳，而是围绕医学检索、证据获取、临床入口、技能调用和长期工作习惯沉淀做了定向收敛。
 

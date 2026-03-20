@@ -1,14 +1,14 @@
 ---
-summary: "Practical Windows install guide for MedClaw alpha users."
+summary: "Practical Windows install guide for MedClaw V0.2（β） users."
 read_when:
   - You want to share MedClaw with Windows users
-  - You need a realistic install path for the current alpha
+  - You need a realistic install path for the current V0.2（β） release
 title: "MedClaw Windows Install"
 ---
 
 # MedClaw Windows Install
 
-For the current MedClaw alpha, the recommended Windows path is **WSL2**.
+For the current MedClaw V0.2（β） release, the recommended Windows path is **WSL2**.
 
 There is not yet a mature native Windows installer for MedClaw. The most reliable experience today is:
 
@@ -96,7 +96,7 @@ node openclaw.mjs medclaw start
 
 ## What Windows users should expect
 
-- This alpha works best for browser-based medical workflows.
+- This beta release works best for browser-based medical workflows.
 - PubMed, ClinicalTrials.gov, guideline sites, DeepEvidence, and SeekEvidence are the main entry points.
 - Native Windows desktop packaging is not included yet.
 - WSL2 is the recommended installation and runtime path for now.
@@ -105,4 +105,4 @@ node openclaw.mjs medclaw start
 
 If you upload MedClaw publicly, tell Windows users:
 
-> Windows users: please use the WSL2 installation path for the current alpha. Native Windows installer packaging is planned later.
+> Windows users: please use the WSL2 installation path for the current V0.2（β） release. Native Windows installer packaging is planned later.

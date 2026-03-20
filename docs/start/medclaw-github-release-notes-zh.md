@@ -1,4 +1,4 @@
-# MedClaw v0.1 Alpha
+# MedClaw V0.2（β）
 
 MedClaw 是基于 OpenClaw 架构打造的医学领域开源版本，面向医疗专业人士提供更轻量、更快、更省 token 的智能工作台。
 

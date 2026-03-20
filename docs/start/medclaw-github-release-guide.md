@@ -8,7 +8,7 @@ title: "MedClaw GitHub Release Guide"
 
 # MedClaw GitHub Release Guide
 
-This guide is the practical path for publishing the current MedClaw alpha to GitHub.
+This guide is the practical path for publishing the current MedClaw V0.2（β） release to GitHub.
 
 ## 1. Create the GitHub repository
 
@@ -27,7 +27,7 @@ git remote remove origin 2>/dev/null || true
 git remote add origin git@github.com:MedSci/medclaw.git
 git branch -M main
 git add .
-git commit -m "Release MedClaw alpha"
+git commit -m "Release MedClaw V0.2（β）"
 git push -u origin main
 ```
 
@@ -45,13 +45,13 @@ Then:
 ```bash
 git status
 git add .
-git commit -m "Prepare MedClaw alpha release"
+git commit -m "Prepare MedClaw V0.2（β） release"
 git push -u origin main
 ```
 
 ## 3. What to upload to GitHub Releases
 
-For the current alpha, the most realistic release assets are:
+For the current V0.2（β） release, the most realistic release assets are:
 
 - GitHub auto-generated source zip/tar.gz
 - macOS `.dmg`
@@ -63,9 +63,9 @@ For the current alpha, the most realistic release assets are:
 
 The repository already contains a macOS packaging flow.
 
-### Fast alpha package (no notarization)
+### Fast beta package (no notarization)
 
-This is the most practical choice for a first GitHub alpha release:
+This is the most practical choice for the first GitHub V0.2（β） release:
 
 ```bash
 cd /Users/paul/Documents/novel/medclaw
@@ -99,13 +99,13 @@ The current packaging scripts now emit MedClaw-branded macOS artifacts. Internal
 
 Right now there is no equally mature MedClaw-branded Windows installer flow in this repository.
 
-For the current public alpha, the practical Windows options are:
+For the current public V0.2（β） release, the practical Windows options are:
 
 1. Publish source + install instructions
 2. Publish the npm/package-based installation path
 3. Add a dedicated Windows packaging lane later
 
-So for this alpha, my recommendation is:
+So for this beta release, my recommendation is:
 
 - macOS: upload `.dmg` and `.zip`
 - Windows: use GitHub source release plus install instructions
@@ -128,7 +128,7 @@ This generates a tarball you can also upload to GitHub Releases.
 ## 7. Suggested GitHub release title
 
 ```text
-MedClaw v0.1 Alpha
+MedClaw V0.2（β）
 ```
 
 ## 8. Suggested release description
@@ -140,9 +140,9 @@ Use the text in:
 
 ## 9. Recommended asset naming on GitHub
 
-- `MedClaw-v0.1-alpha-macos.dmg`
-- `MedClaw-v0.1-alpha-macos.zip`
-- `MedClaw-v0.1-alpha-source.tar.gz`
+- `MedClaw-v0.2-beta-macos.dmg`
+- `MedClaw-v0.2-beta-macos.zip`
+- `MedClaw-v0.2-beta-source.tar.gz`
 
 ## 10. Where release files should go
 
@@ -161,11 +161,11 @@ Recommended upload locations:
 - GitHub Releases: `.dmg`, `.zip`, release notes
 - Optional later: official website or CDN mirror for the latest stable installer
 
-## 11. Honest alpha-release recommendation
+## 11. Honest V0.2（β） release recommendation
 
 For this stage, publish MedClaw as:
 
-- `Alpha`
+- `Beta`
 - `Developer Preview`
 - `For medical professionals and early collaborators`
 

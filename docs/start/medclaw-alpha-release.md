@@ -1,12 +1,12 @@
 ---
-summary: "Public alpha release notes and operator checklist for MedClaw."
+summary: "Public V0.2（β） release notes and operator checklist for MedClaw."
 read_when:
-  - You are preparing a public MedClaw alpha release
+  - You are preparing a public MedClaw V0.2（β） release
   - You need the shortest install/start path for testers
-title: "MedClaw Alpha Release"
+title: "MedClaw V0.2（β） Release"
 ---
 
-# MedClaw Alpha Release
+# MedClaw V0.2（β） Release
 
 MedClaw is an open-source medical edition built on the [OpenClaw](https://github.com/openclaw/openclaw) architecture and released by MedSci (梅斯医学).
 
@@ -55,7 +55,7 @@ It is designed for medical professionals who need a lighter, faster, and lower-t
 - Minimal configuration
 - Becomes progressively smarter and closer to a long-term personal secretary and assistant
 
-## Recommended public alpha entry points
+## Recommended public V0.2（β） entry points
 
 For source users:
 
@@ -71,14 +71,14 @@ For the shortest repeatable local launch:
 pnpm medclaw:install-and-start
 ```
 
-## What this alpha is for
+## What this V0.2（β） release is for
 
 - PubMed and ClinicalTrials.gov evidence collection
 - Guideline page review
 - Journal and medical-site extraction through adapters
 - DeepEvidence and SeekEvidence entry points
 
-## What this alpha is not for
+## What this V0.2（β） release is not for
 
 - Direct clinical diagnosis
 - Automatic medical orders or treatment decisions

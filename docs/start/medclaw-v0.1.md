@@ -1,13 +1,13 @@
 ---
 summary: "Medical-focused OpenClaw starter profile with a reduced UI, efficient browser snapshots, and bundled evidence skills."
 read_when:
-  - You are setting up MedClaw v0.1
+  - You are setting up MedClaw V0.2（β）
   - You want the medical-only starter preset
   - You are trimming OpenClaw to a literature and evidence workflow
-title: "MedClaw v0.1"
+title: "MedClaw V0.2（β）"
 ---
 
-# MedClaw v0.1
+# MedClaw V0.2（β）
 
 MedClaw is an open-source medical edition built on the OpenClaw architecture and released by MedSci (梅斯医学).
 
@@ -141,7 +141,7 @@ See also: [MedClaw Site Adapter Registry](/Users/paul/Documents/novel/medclaw/do
 Cloud backend has been separated from this repo for deployment. Local path:
 `/Users/paul/Documents/novel/medclaw-cloud-backend`
 See also: [MedClaw Minimal Config](/Users/paul/Documents/novel/medclaw/docs/start/medclaw-minimal-config.md)
-See also: [MedClaw Alpha Release Guide](/Users/paul/Documents/novel/medclaw/docs/start/medclaw-alpha-release.md)
+See also: [MedClaw V0.2（β） Release Guide](/Users/paul/Documents/novel/medclaw/docs/start/medclaw-alpha-release.md)
 See also: [MedClaw Boundaries and Disclaimer](/Users/paul/Documents/novel/medclaw/docs/start/medclaw-boundaries.md)
 See also: [MedClaw Release Page Copy](/Users/paul/Documents/novel/medclaw/docs/start/medclaw-release-page-copy.md)
 See also: [MedClaw GitHub Release Guide](/Users/paul/Documents/novel/medclaw/docs/start/medclaw-github-release-guide.md)
@@ -156,7 +156,7 @@ Use it when you want the agent to:
 - extract compact structured fields with DOM-based logic
 - return a fixed Markdown table instead of a long free-form snapshot
 
-Supported sites in v0.1:
+Supported sites in V0.2（β）:
 
 - `pubmed`
 - `clinicaltrials`

@@ -1,5 +1,5 @@
 ---
-summary: "Draft copy for a public MedClaw alpha landing page."
+summary: "Draft copy for a public MedClaw V0.2（β） landing page."
 read_when:
   - You are preparing a MedClaw public release page
   - You need launch copy that avoids exposing technical internals

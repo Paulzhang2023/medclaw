@@ -232,7 +232,7 @@ else
 fi
 
 echo "🖼  Copying app icon"
-cp "$ROOT_DIR/apps/macos/Sources/OpenClaw/Resources/OpenClaw.icns" "$APP_ROOT/Contents/Resources/${DIST_PRODUCT_NAME}.icns"
+cp "$ROOT_DIR/apps/macos/Sources/OpenClaw/Resources/MedClaw.icns" "$APP_ROOT/Contents/Resources/${DIST_PRODUCT_NAME}.icns"
 
 echo "📦 Copying device model resources"
 rm -rf "$APP_ROOT/Contents/Resources/DeviceModels"
